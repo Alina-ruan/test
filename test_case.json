@@ -1,0 +1,1371 @@
+{
+	"info": {
+		"_postman_id": "99ef268d-efb2-4a7a-ae71-7471af8504f5",
+		"name": "豆神学习机App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "注册登录",
+			"item": [
+				{
+					"name": "注册登录（正常）",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6d29e87-c741-4a46-903c-2e1f7336b6b0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"\r",
+									"  pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"// 把responseBody转为json字符串\r",
+									"\r",
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"// 设置环境变量token，供后面的接口引用\r",
+									"\r",
+									"pm.environment.set(\"token\", data.data.token);\r",
+									"pm.environment.set(\"sid\", data.data.student_info.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "13200000000",
+									"type": "text"
+								},
+								{
+									"key": "verify_data",
+									"value": "111111",
+									"type": "text"
+								},
+								{
+									"key": "login_type",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "device",
+									"value": "hhhhhh",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "学员信息（正常）",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a0e34f4b-4827-4f61-8163-1c7d16cd028c",
+								"exec": [
+									"pm.test(\"学员信息获取成功\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.code).to.eql(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/user/student/info?student_id={{sid}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"student",
+								"info"
+							],
+							"query": [
+								{
+									"key": "student_id",
+									"value": "{{sid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "忘记密码-密码重置（正常）",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ad1a52b-aec0-4279-9cb2-736cf839f53e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "13718870406",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "111111",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "rln123",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/user/resetpwd",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"user",
+								"resetpwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "激活学习机",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c1a910e7-0a54-4cc1-b732-896eb6bc6da2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "sid",
+									"value": "{{sid}}",
+									"type": "text"
+								},
+								{
+									"key": "grade_id",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "device",
+									"value": "fgbfgbfgb2342",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "27yanh3EfwT4",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "13200000000",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/user/activate",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"user",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "用户地址",
+			"item": [
+				{
+					"name": "地址列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/user/address/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"address",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "地址详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/user/address/info?address_id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"address",
+								"info"
+							],
+							"query": [
+								{
+									"key": "address_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "地址新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "uid",
+									"value": "",
+									"description": "用户id",
+									"type": "text"
+								},
+								{
+									"key": "to_user",
+									"value": "",
+									"description": "收件人",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "",
+									"description": "省id",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "",
+									"description": "市id",
+									"type": "text"
+								},
+								{
+									"key": "district_id",
+									"value": "",
+									"description": "区id",
+									"type": "text"
+								},
+								{
+									"key": "province",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "district",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"description": "详细地址",
+									"type": "text"
+								},
+								{
+									"key": "address_alias",
+									"value": "",
+									"description": "别名",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "",
+									"description": "联系电话",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/address/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"address",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "地址修改",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "uid",
+									"value": "",
+									"description": "用户id",
+									"type": "text"
+								},
+								{
+									"key": "to_user",
+									"value": "",
+									"description": "收件人",
+									"type": "text"
+								},
+								{
+									"key": "province_id",
+									"value": "",
+									"description": "省id",
+									"type": "text"
+								},
+								{
+									"key": "city_id",
+									"value": "",
+									"description": "市id",
+									"type": "text"
+								},
+								{
+									"key": "district_id",
+									"value": "",
+									"description": "区id",
+									"type": "text"
+								},
+								{
+									"key": "province",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "district",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"description": "详细地址",
+									"type": "text"
+								},
+								{
+									"key": "address_alias",
+									"value": "",
+									"description": "别名",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "",
+									"description": "联系电话",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/address/update",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"address",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "地址删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/address/del",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"address",
+								"del"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "设置默认地址",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "address_id",
+									"value": "111",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/address/default",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"address",
+								"default"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "验证码",
+			"item": [
+				{
+					"name": "发送验证码",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "13718870406",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/captcha/send",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"captcha",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "验证码校验",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "13718870406",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "552555",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/user/captcha/verify",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"user",
+								"captcha",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "名著阅读精品课",
+			"item": [
+				{
+					"name": "列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/boutique/course/list?page=2&page_size=3&school_year=2021",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"boutique",
+								"course",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "page_size",
+									"value": "3"
+								},
+								{
+									"key": "school_year",
+									"value": "2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "学年列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/boutique/course/school-year",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"boutique",
+								"course",
+								"school-year"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "确认订单页数据",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/boutique/course/confirm",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"boutique",
+								"course",
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "school_year",
+									"value": "2027",
+									"disabled": true
+								},
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "下单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cid",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "pay_mode",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "pay_scene",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "return_url",
+									"value": "",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/boutique/course/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"boutique",
+								"course",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "课程详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/boutique/course/info?school_year=2021",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"boutique",
+								"course",
+								"info"
+							],
+							"query": [
+								{
+									"key": "school_year",
+									"value": "2021"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "豆神解读",
+			"item": [
+				{
+					"name": "课程列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/understanding/course/list?page=&page_size=",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"understanding",
+								"course",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": ""
+								},
+								{
+									"key": "page_size",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "校内同步作文全解",
+			"item": [
+				{
+					"name": "年级选择",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/writing/course/select-grade?school_year=2021",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"writing",
+								"course",
+								"select-grade"
+							],
+							"query": [
+								{
+									"key": "school_year",
+									"value": "2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "同步作文课程页",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/writing/course/index?school_year=2021&grade=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"writing",
+								"course",
+								"index"
+							],
+							"query": [
+								{
+									"key": "school_year",
+									"value": "2021"
+								},
+								{
+									"key": "grade",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "课程详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/writing/course/info?id=7",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"writing",
+								"course",
+								"info"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "确认订单页",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/writing/course/confirm?id=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"writing",
+								"course",
+								"confirm"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "下单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cid",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "pay_mode",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "pay_scene",
+									"value": "hhhh",
+									"type": "text"
+								},
+								{
+									"key": "return_url",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/writing/course/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"writing",
+								"course",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "文言文私房课",
+			"item": [
+				{
+					"name": "子课详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/privatecourse/course/info?lesson_id=1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"privatecourse",
+								"course",
+								"info"
+							],
+							"query": [
+								{
+									"key": "lesson_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "子课列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/privatecourse/course/list",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"privatecourse",
+								"course",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "确认订单页数据",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v1/privatecourse/course/confirm",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"privatecourse",
+								"course",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "下单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cid",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "pay_mode",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "pay_scene",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "return_url",
+									"value": "",
+									"type": "text"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/privatecourse/course/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"privatecourse",
+								"course",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
